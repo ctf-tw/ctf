@@ -3,6 +3,7 @@ package kl.tw.ctf.service;
 import static java.util.stream.Collectors.toList;
 
 import java.util.List;
+import kl.tw.ctf.dao.DataFile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,9 +20,9 @@ public class CsvToDbConversionService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createAndPopulateTable(String fileName, List<String> columns, List<List<String>> data) {
-        createTable(fileName, columns);
-        populateTableWithData(fileName, data);
+    public void createAndPopulateTable(DataFile dataFile) {
+        createTable(dataFile.getName(), dataFile.getColumnNames());
+        populateTableWithData(dataFile.getName(), dataFile.getColumnValues());
     }
 
     private void createTable(String filename, List<String> columns) {

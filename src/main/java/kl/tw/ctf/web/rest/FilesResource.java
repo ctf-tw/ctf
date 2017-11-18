@@ -1,6 +1,7 @@
 package kl.tw.ctf.web.rest;
 
 import kl.tw.ctf.dao.DataFile;
+import kl.tw.ctf.service.CsvToDbConversionService;
 import kl.tw.ctf.service.DataFileParserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class FilesResource {
     @Autowired
     DataFileParserService dataFileParserService;
 
+    @Autowired
+    CsvToDbConversionService dbConversionService;
+
 /*    public FilesResource(@Autowired dataFileParserService) {
         this.dataFileParserService = dataFileParserService;
     }
@@ -51,6 +55,7 @@ public class FilesResource {
         try {
 //            saveUploadedFiles(Arrays.asList(uploadfile));
             DataFile dataFile = dataFileParserService.parse(uploadfile.getName(), uploadfile.getBytes());
+            dbConversionService.createAndPopulateTable(dataFile);
             log.debug(dataFile.getName());
             log.debug(dataFile.getColumnNames().get(0));
 
