@@ -14,6 +14,26 @@
                 </div>
             </form>
 
+            <div *ngSwitchCase="true">
+                <h4>Suspicious activity list:</h4>
+                <table class="table table-inverse">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Reason</th>
+                            <th>Graph Link</th>
+                        </tr>
+                    </thead>
+                    <tr *ngFor="let suspected of suspiciousList">
+                        <td>{{suspected.id}}</td>
+                        <td>{{suspected.reason}}</td>
+                        <td><a href="#" class="btn btn-primary btn-lg active" role="button">See graph</a></td>
+                        <!--<td><a href="http://localhost:8080/management/graphs?id={{suspected.id}}">See graph</a></td>-->
+                    </tr>
+                </table>
+                Last updated: {{suspiciousLastUpdated}}
+            </div>
+
             <div class="alert alert-warning" *ngSwitchCase="false">
                 <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
                 <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a><span jhiTranslate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
@@ -23,6 +43,7 @@
                 <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
                 <a class="alert-link" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
             </div>
+
         </div>
 
     </div>

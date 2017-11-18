@@ -19,4 +19,15 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet id="003" author="vadym">
+        <insert tableName="suspected_reason">
+            <column name="id">A678DDSSADASASKJKLCN</column>
+            <column name="reason">Number of transfers made to the same recipient is above the threshold.</column>
+        </insert>
+        <insert tableName="suspected_reason">
+            <column name="id">B378DDSSPLZSASKJKLIO</column>
+            <column name="reason">Multiple users are registered with the same phone number and address. Slightly longer description</column>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

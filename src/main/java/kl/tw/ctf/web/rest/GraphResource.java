@@ -24,7 +24,7 @@ import java.util.List;
 public class GraphResource {
     private final Logger log = LoggerFactory.getLogger(GraphResource.class);
 
-    @PostMapping("/graphs")
+    @RequestMapping(value = "/graphs", method = { RequestMethod.GET, RequestMethod.POST })
     public ResponseEntity<?> getDataForGraph(@RequestParam("id") String id) {
         log.debug("Graph requested!");
         String result = null;

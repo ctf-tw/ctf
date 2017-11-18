@@ -21,15 +21,10 @@ public class BadUserResource {
     @Autowired
     SuspectedReasonRepository suspectedReasonRepository;
 
-    @PostMapping("/badUserList")
-    public @ResponseBody List<SuspectedReason> showBadUsers(@RequestParam("id") String id) {
+    @GetMapping("/suspiciousList")
+    public @ResponseBody List<SuspectedReason> showBadUsers() {
         log.debug("Graph requested!");
         List<SuspectedReason> result;
-
-        if (id == null) {
-            log.debug("No id provided!");
-            return null;
-        }
 
         try {
             result = suspectedReasonRepository.findAll();

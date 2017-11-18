@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
     loading: boolean = false;
     fileUploaded: boolean = false;
     name: string = 'none';
+    suspiciousList: any;
+    suspiciousLastUpdated: Date;
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -41,12 +43,36 @@ export class HomeComponent implements OnInit {
         });
     }
 
+    loadSuspiciousEntries() {
+        if (!this.isAuthenticated()) {
+            return;
+        }
+
+        let thiz = this;
+        console.log(this.suspiciousList);
+        this.http.get("http://localhost:8080/management/suspiciousList")
+            .map((res: Response) => {
+                thiz.suspiciousList = res;
+                thiz.suspiciousLastUpdated = new Date();
+            })
+            .catch(error => Observable.throw(error))
+            .subscribe(
+                data => console.log('success'),
+                error => console.log(error)
+            );
+    }
 
     ngOnInit() {
         this.principal.identity().then((account) => {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
+
+        let thiz = this;
+        setInterval(function(){
+            console.log("called by timeout");
+            thiz.loadSuspiciousEntries();
+        },2000);
     }
 
     registerAuthenticationSuccess() {
