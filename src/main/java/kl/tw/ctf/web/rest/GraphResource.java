@@ -1,8 +1,6 @@
 package kl.tw.ctf.web.rest;
 
-import java.util.List;
 import kl.tw.ctf.service.DataRetrieveService;
-import kl.tw.ctf.service.RLauncherService;
 import kl.tw.ctf.service.impl.DataFileParserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +19,6 @@ public class GraphResource {
     private final Logger log = LoggerFactory.getLogger(GraphResource.class);
 
     @Autowired
-    RLauncherService rLauncherService;
-
-    @Autowired
     DataRetrieveService dataRetrieveService;
 
     @PostMapping("/graphs")
@@ -37,7 +32,7 @@ public class GraphResource {
         String jsonResponse = null;
         try {
             jsonResponse = dataRetrieveService.getJsonGraphFor(id, DataFileParserServiceImpl.currentlyOpenFile);
-
+            log.info("Graph build response: " + jsonResponse);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
