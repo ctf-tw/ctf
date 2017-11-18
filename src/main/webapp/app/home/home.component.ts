@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     fileUploaded: boolean = false;
     name: string = 'none';
 
+
     @ViewChild('fileInput') fileInput: ElementRef;
 
     constructor(
@@ -88,4 +89,6 @@ export class HomeComponent implements OnInit {
     fileChanged() {
         return this.fileUploaded;
     }
+
+
 }

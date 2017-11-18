@@ -1,11 +1,7 @@
 package kl.tw.ctf.dao;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.Singular;
-
 import java.util.List;
+import lombok.NonNull;
 
 
 public class DataFile {
@@ -25,6 +21,10 @@ public class DataFile {
 
     public void setColumnNames(List<String> columnNames) {
         this.columnNames = columnNames;
+    }
+
+    public String getTableName() {
+        return name.replace(".", "_");
     }
 
     public List<List<String>> getColumnValues() {

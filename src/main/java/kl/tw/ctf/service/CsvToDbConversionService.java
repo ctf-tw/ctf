@@ -21,15 +21,15 @@ public class CsvToDbConversionService {
     }
 
     public void createAndPopulateTable(DataFile dataFile) {
-        createTable(dataFile.getName(), dataFile.getColumnNames());
-        populateTableWithData(dataFile.getName(), dataFile.getColumnValues());
+        createTable(dataFile);
+        populateTableWithData(dataFile);
     }
 
-    private void createTable(String filename, List<String> columns) {
-        String commaSeparatedColumns = String.join(" varchar(225),", columns.subList(1, columns.size())).concat(" varchar(225)");
+    private void createTable(DataFile dataFile) {
+        String commaSeparatedColumns = String.join(" varchar(225),", dataFile.getColumnNames()).concat(" varchar(225)");
         String sqlStatement =
-            "CREATE TABLE IF NOT EXISTS " + filename + " "
-                + "(" + columns.get(0) + " " + "SERIAL NOT NULL PRIMARY KEY,"
+            "CREATE TABLE IF NOT EXISTS " + dataFile.getTableName() + " "
+                + "(id SERIAL NOT NULL PRIMARY KEY,"
                 + commaSeparatedColumns + ")";
 
         jdbcTemplate.execute(sqlStatement);
@@ -38,14 +38,14 @@ public class CsvToDbConversionService {
     }
 
 
-    private void populateTableWithData(String fileName, List<List<String>> columnData) {
-        columnData.forEach(column -> {
-            Long userId = Long.parseLong(column.get(0));
+    private void populateTableWithData(DataFile dataFile) {
+        dataFile.getColumnValues().forEach(column -> {
             column = column.stream().map(el -> "\'" + el + "\'").collect(toList());
 
             String query =
-                " insert into " + fileName +
-                    " values ( " + userId + ", " + String.join(", " , column.subList(1, column.size())) + ")";
+                " insert into " + dataFile.getTableName() +
+                    "(" + String.join(",", dataFile.getColumnNames()) + ")" +
+                    " values (" +  String.join("," , column) + ")";
             jdbcTemplate.execute(query);
 
         });
