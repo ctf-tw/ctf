@@ -19,7 +19,7 @@ import java.util.List;
  * DataUpload controller
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/files")
 public class FilesResource {
     private static final String UPLOADED_FOLDER = "/tmp";
 
@@ -28,7 +28,7 @@ public class FilesResource {
     /**
     * POST fileUpload
     */
-    @PostMapping("/files")
+    @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
         log.debug("Single file upload!");
 
