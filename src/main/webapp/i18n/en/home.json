@@ -1,13 +1,13 @@
 {
     "home": {
-        "title": "Welcome, Java Hipster!",
-        "subtitle": "This is your homepage",
+        "title": "Welcome, to LinkHound!",
+        "subtitle": "This portal will help you effectively monitor and detect suspicious financial transactions flowing through your system.",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
-        "question": "If you have any question on JHipster:",
+        "question": "If you have any question on LinkHound:",
         "link": {
-            "homepage": "JHipster homepage",
+            "homepage": "Home page",
             "stackoverflow": "JHipster on Stack Overflow",
             "bugtracker": "JHipster bug tracker",
             "chat": "JHipster public chat room",
