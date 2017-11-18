@@ -16,7 +16,7 @@
 config:
     rscript:
         path: /Users/vadym.vasyliev/hack/ctf/R
-        badUsersScript: simple.R
+        badUsersScript: Rscript simple.R
 
 management:
     security:
