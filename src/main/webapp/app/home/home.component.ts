@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     suspiciousList: any;
     suspiciousLastUpdated: Date;
 
+
     @ViewChild('fileInput') fileInput: ElementRef;
 
     constructor(
@@ -114,4 +115,6 @@ export class HomeComponent implements OnInit {
     fileChanged() {
         return this.fileUploaded;
     }
+
+
 }

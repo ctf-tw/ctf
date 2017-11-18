@@ -1,60 +1,43 @@
 package kl.tw.ctf.web.rest;
 
-import kl.tw.ctf.dao.DataFile;
-import kl.tw.ctf.service.DataFileParserService;
-import kl.tw.ctf.service.RLauncherService;
-import kl.tw.ctf.service.impl.RLauncherServiceImpl;
+import kl.tw.ctf.service.DataRetrieveService;
+import kl.tw.ctf.service.impl.DataFileParserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/management")
 public class GraphResource {
     private final Logger log = LoggerFactory.getLogger(GraphResource.class);
 
+    @Autowired
+    DataRetrieveService dataRetrieveService;
+
     @RequestMapping(value = "/graphs", method = { RequestMethod.GET, RequestMethod.POST })
     public ResponseEntity<?> getDataForGraph(@RequestParam("id") String id) {
         log.debug("Graph requested!");
-        String result = null;
-
         if (id == null) {
             log.debug("No id provided!");
             return new ResponseEntity("please select a file!", HttpStatus.FORBIDDEN);
         }
 
+        String jsonResponse = null;
         try {
-            result = new StringBuilder()
-                .append("{ \n")
-                .append("'nodes': [\n")
-                .append("{'id': 1, 'group': 'user'},\n")
-                .append("{'id': 2, 'group': 'user'},\n")
-                .append("{'id': 3, 'group': 'recipient'},\n")
-                .append("{'id': 4, 'group': 'phone'}\n")
-                .append("],\n")
-                .append("'edges': [\n")
-                .append("{'source': 1, 'target': 3, 'value': 2},\n")
-                .append("{'source': 1, 'target': 4, 'value': 1},\n")
-                .append(" {'source': 2, 'target': 3, 'value': 2}\n")
-                .append("] \n")
-                .append("}")
-                .toString();
+            jsonResponse = dataRetrieveService.getJsonGraphFor(id, DataFileParserServiceImpl.currentlyOpenFile);
+            log.info("Graph build response: " + jsonResponse);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity(result, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity(jsonResponse, new HttpHeaders(), HttpStatus.OK);
 
     }
 

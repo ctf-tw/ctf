@@ -178,6 +178,7 @@ dependencies {
     compile "io.springfox:springfox-bean-validators:${springfox_version}"
     compile "org.postgresql:postgresql"
     compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
     testCompile "org.awaitility:awaitility:${awaitility_version}"
     testCompile "com.jayway.jsonpath:json-path"
     testCompile ("org.springframework.boot:spring-boot-starter-test") {
