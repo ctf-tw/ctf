@@ -169,7 +169,7 @@ public class UserServiceIntTest {
         PersistentToken token = new PersistentToken();
         token.setSeries(tokenSeries);
         token.setUser(user);
-        token.setTokenValue(tokenSeries + "-data");
+        token.setTokenValue(tokenSeries + "-matchedValue");
         token.setTokenDate(localDate);
         token.setIpAddress("127.0.0.1");
         token.setUserAgent("Test agent");
