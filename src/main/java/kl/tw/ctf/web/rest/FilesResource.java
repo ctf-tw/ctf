@@ -1,7 +1,11 @@
 package kl.tw.ctf.web.rest;
 
+import kl.tw.ctf.dao.DataFile;
+import kl.tw.ctf.service.CsvToDbConversionService;
+import kl.tw.ctf.service.DataFileParserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +26,19 @@ import java.util.List;
 @RequestMapping("/files")
 public class FilesResource {
     private static final String UPLOADED_FOLDER = "/tmp";
-
     private final Logger log = LoggerFactory.getLogger(FilesResource.class);
+
+    @Autowired
+    DataFileParserService dataFileParserService;
+
+    @Autowired
+    CsvToDbConversionService dbConversionService;
+
+/*    public FilesResource(@Autowired dataFileParserService) {
+        this.dataFileParserService = dataFileParserService;
+    }
+    */
+
 
     /**
     * POST fileUpload
@@ -38,7 +53,11 @@ public class FilesResource {
         }
 
         try {
-            saveUploadedFiles(Arrays.asList(uploadfile));
+//            saveUploadedFiles(Arrays.asList(uploadfile));
+            DataFile dataFile = dataFileParserService.parse(uploadfile.getOriginalFilename(), uploadfile.getBytes());
+            dbConversionService.createAndPopulateTable(dataFile);
+            log.debug(dataFile.getName());
+            log.debug(dataFile.getColumnNames().get(0));
 
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
