@@ -24,9 +24,6 @@ import java.util.List;
 public class GraphResource {
     private final Logger log = LoggerFactory.getLogger(GraphResource.class);
 
-    @Autowired
-    RLauncherService rLauncherService;
-
     @PostMapping("/graphs")
     public ResponseEntity<?> getDataForGraph(@RequestParam("id") String id) {
         log.debug("Graph requested!");

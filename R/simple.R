@@ -16,4 +16,5 @@ json <-
 
 mydf <- fromJSON(json)
 mydf$Ranking <- c(3, 1, 2, 4)
+Sys.sleep(10)
 toJSON(mydf, pretty=TRUE)

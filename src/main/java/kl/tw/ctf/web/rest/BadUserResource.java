@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BadUserResource {
     private final Logger log = LoggerFactory.getLogger(BadUserResource.class);
 
-    @Autowired
-    RLauncherService rLauncherService;
-
-    @PostMapping("/badUser")
+    @PostMapping("/badUserList")
     public ResponseEntity<?> showBadUsers(@RequestParam("id") String id) {
         log.debug("Graph requested!");
         String result = null;
@@ -31,7 +28,7 @@ public class BadUserResource {
         }
 
         try {
-            result = rLauncherService.getDataFor(id);
+           //DB ops
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
