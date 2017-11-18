@@ -50,7 +50,7 @@ public class FilesResource {
 
         try {
 //            saveUploadedFiles(Arrays.asList(uploadfile));
-            DataFile dataFile = dataFileParserService.parse(uploadfile.getName(), uploadfile.getBytes());
+            DataFile dataFile = dataFileParserService.parse(uploadfile.getOriginalFilename(), uploadfile.getBytes());
             log.debug(dataFile.getName());
             log.debug(dataFile.getColumnNames().get(0));
 
