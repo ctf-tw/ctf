@@ -29,7 +29,10 @@
                     <tr *ngFor="let suspected of suspiciousList">
                         <td>{{suspected.id}}</td>
                         <td>{{suspected.reason}}</td>
-                        <td><a href="#" class="btn btn-primary btn-lg active" role="button">See graph</a></td>
+                        <td>
+                            <input type="hidden" value="{{suspected.id}}" />
+                            <a href="#" class="btn btn-primary btn-lg active" role="button" onclick="myFunction(event)">See graph</a>
+                        </td>
                         <!--<td><a href="http://localhost:8080/management/graphs?id={{suspected.id}}">See graph</a></td>-->
                     </tr>
                 </table>
