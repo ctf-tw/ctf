@@ -7,6 +7,7 @@ import kl.tw.ctf.service.RLauncherService;
 import kl.tw.ctf.service.util.StreamGobbler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +23,12 @@ import java.util.logging.FileHandler;
 public class RLauncherServiceImpl implements RLauncherService {
 
     private final Logger log = LoggerFactory.getLogger(RLauncherServiceImpl.class);
-    private static final String R_SCRIPTS_DIR_PATH = "/Users/vadym.vasyliev/hack";
-    private static final String GET_DATA_COMMAND = "sh ex.sh";
+
+    @Value("${config.rscript.path}")
+    private String R_SCRIPTS_DIR_PATH;
+
+    @Value("${config.rscript.badUsersScript}")
+    private String GET_DATA_COMMAND;
 
     @Override
     public String getDataFor(String id) {
@@ -39,7 +44,6 @@ public class RLauncherServiceImpl implements RLauncherService {
   /*          StreamGobbler streamGobbler =
                 new StreamGobbler(process.getInputStream(), System.out::println);
             Executors.newSingleThreadExecutor().submit(streamGobbler);*/
-
 
             BufferedReader reader =
                 new BufferedReader(new InputStreamReader(process.getInputStream()));
