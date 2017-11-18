@@ -1,33 +1,22 @@
 package kl.tw.ctf.service;
 
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class CsvToDbConversion {
+public class CsvToDbConversionService {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public CsvToDbConversion(JdbcTemplate jdbcTemplate) {
+    public CsvToDbConversionService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @Scheduled(fixedDelay = 1000L)
-    public void test() {
-        String fileName = "hello";
-        List<String> columns = asList("user_id", "hello", "world", "name");
-        List<String> column1 = asList("1", "30", "40", "John");
-        List<String> column2 = asList("2", "50", "60", "Huan");
-        createAndPopulateTable(fileName, columns, asList(column1, column2));
     }
 
     public void createAndPopulateTable(String fileName, List<String> columns, List<List<String>> data) {
@@ -56,7 +45,6 @@ public class CsvToDbConversion {
             String query =
                 " insert into " + fileName +
                     " values ( " + userId + ", " + String.join(", " , column.subList(1, column.size())) + ")";
-            System.out.println("query to execute " + query);
             jdbcTemplate.execute(query);
 
         });
