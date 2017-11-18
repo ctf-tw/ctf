@@ -38,7 +38,21 @@ public class GraphResource {
         }
 
         try {
-            result = rLauncherService.getDataFor(id);
+            result = new StringBuilder()
+                .append("{ \n")
+                .append("'nodes': [\n")
+                .append("{'id': 1, 'group': 'user'},\n")
+                .append("{'id': 2, 'group': 'user'},\n")
+                .append("{'id': 3, 'group': 'recipient'},")
+                .append("{'id': 4, 'group': 'phone'}\n")
+                .append("],\n")
+                .append("'edges': [\n")
+                .append("{'source': 1, 'target': 3, 'value': 2},")
+                .append("{'source': 1, 'target': 4, 'value': 1},")
+                .append(" {'source': 2, 'target': 3, 'value': 2}")
+                .append("] \n")
+                .append("}")
+                .toString();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
