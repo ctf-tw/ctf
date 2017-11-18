@@ -1,8 +1,9 @@
 #!/usr/bin/env Rscript
 args <- commandArgs(trailingOnly=TRUE)
+source("dbQuery.R")
 
 # query the database for given file and user
-data <- ...
+data <- getData(args[1])
 
 # convert it to a graph object
 g <- graph_from_edgelist(as.matrix(data[,c(1,2)]))

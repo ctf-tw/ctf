@@ -3,6 +3,7 @@ package kl.tw.ctf.web.rest;
 import kl.tw.ctf.dao.DataFile;
 import kl.tw.ctf.service.CsvToDbConversionService;
 import kl.tw.ctf.service.DataFileParserService;
+import kl.tw.ctf.service.RLauncherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,6 +33,9 @@ public class FilesResource {
 
     @Autowired
     CsvToDbConversionService dbConversionService;
+
+    @Autowired
+    RLauncherService rLauncherService;
 
 /*    public FilesResource(@Autowired dataFileParserService) {
         this.dataFileParserService = dataFileParserService;
@@ -56,8 +59,8 @@ public class FilesResource {
 //            saveUploadedFiles(Arrays.asList(uploadfile));
             DataFile dataFile = dataFileParserService.parse(uploadfile.getOriginalFilename().replace(".", "_"), uploadfile.getBytes());
             dbConversionService.createAndPopulateTable(dataFile);
-            log.debug(dataFile.getName());
-            log.debug(dataFile.getColumnNames().get(0));
+            rLauncherService.notifyUpload();
+
 
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

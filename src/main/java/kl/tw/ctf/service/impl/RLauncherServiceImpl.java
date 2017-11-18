@@ -31,34 +31,34 @@ public class RLauncherServiceImpl implements RLauncherService {
     private String GET_DATA_COMMAND;
 
     @Override
-    public String getDataFor(String id) {
+    public void notifyUpload() {
         ProcessBuilder builder = new ProcessBuilder();
-        String fullCommand = GET_DATA_COMMAND + " " + id;
+        String fullCommand = GET_DATA_COMMAND;
         builder.command(fullCommand.split(" "));
 
         builder.directory(new File(R_SCRIPTS_DIR_PATH));
         Process process = null;
-        StringBuilder sb = new StringBuilder();
+//        StringBuilder sb = new StringBuilder();
         try {
             process = builder.start();
-  /*          StreamGobbler streamGobbler =
+            StreamGobbler streamGobbler =
                 new StreamGobbler(process.getInputStream(), System.out::println);
-            Executors.newSingleThreadExecutor().submit(streamGobbler);*/
+            Executors.newSingleThreadExecutor().submit(streamGobbler);
 
-            BufferedReader reader =
+/*            BufferedReader reader =
                 new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             String line = "";
             while ((line = reader.readLine())!= null) {
                 sb.append(line + "\n");
-            }
+            }*/
 
-            int exitCode = process.waitFor();
+            //int exitCode = process.waitFor();
         } catch (Exception e) {
             log.error("Can't run R script " + e.getMessage());
-            return null;
+//            return null;
         }
 
-        return sb.toString();
+//        return sb.toString();
     }
 }

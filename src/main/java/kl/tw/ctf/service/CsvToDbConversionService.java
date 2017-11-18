@@ -28,7 +28,7 @@ public class CsvToDbConversionService {
     private void createTable(DataFile dataFile) {
         String commaSeparatedColumns = String.join(" varchar(225),", dataFile.getColumnNames()).concat(" varchar(225)");
         String sqlStatement =
-            "CREATE TABLE IF NOT EXISTS " + dataFile.getName() + " "
+            "CREATE TABLE IF NOT EXISTS " + dataFile.getTableName() + " "
                 + "(id SERIAL NOT NULL PRIMARY KEY,"
                 + commaSeparatedColumns + ")";
 
@@ -43,7 +43,7 @@ public class CsvToDbConversionService {
             column = column.stream().map(el -> "\'" + el + "\'").collect(toList());
 
             String query =
-                " insert into " + dataFile.getName() +
+                " insert into " + dataFile.getTableName() +
                     "(" + String.join(",", dataFile.getColumnNames()) + ")" +
                     " values (" +  String.join("," , column) + ")";
             jdbcTemplate.execute(query);

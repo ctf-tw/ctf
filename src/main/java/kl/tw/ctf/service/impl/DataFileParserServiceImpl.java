@@ -1,6 +1,7 @@
 package kl.tw.ctf.service.impl;
 
 import com.opencsv.CSVReader;
+import javax.xml.crypto.Data;
 import kl.tw.ctf.dao.DataFile;
 import kl.tw.ctf.service.DataFileParserService;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
 public class DataFileParserServiceImpl implements DataFileParserService {
 
     private final Logger log = LoggerFactory.getLogger(DataFileParserServiceImpl.class);
+
+    public static DataFile currentlyOpenFile;
 
     @Override
     public DataFile parse(String fileName, byte[] content) {
@@ -56,8 +59,8 @@ public class DataFileParserServiceImpl implements DataFileParserService {
             return null;
         }
 
-
-        return new DataFile(fileName, columnNames, columnValues);
+        currentlyOpenFile = new DataFile(fileName, columnNames, columnValues);
+        return currentlyOpenFile;
 /*        return DataFile.builder()
             .name(fileName)
             .columnNames(columnNames)
