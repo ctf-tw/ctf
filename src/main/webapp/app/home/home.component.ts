@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     form: FormGroup;
     loading: boolean = false;
+    fileUploaded: boolean = false;
+    name: string = 'none';
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -56,7 +58,6 @@ export class HomeComponent implements OnInit {
     }
 
     onFileChange(event) {
-        let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             console.log("FILE");
@@ -71,35 +72,9 @@ export class HomeComponent implements OnInit {
                     data => console.log('success'),
                     error => console.log(error)
                 );
-
-
-            // reader.readAsDataURL(file);
-            // reader.onload = () => {
-            //     this.form.get('avatar').setValue({
-            //         filetype: file.type,
-            //         value: reader.result.split(',')[1],
-            //         file: file
-            //     })
-            // };
+            this.fileUploaded = true;
+            this.name = file.name;
         }
-    }
-
-    onSubmit() {
-        const formModel = this.form.value;
-        this.loading = true;
-        // In a real-world app you'd have a http request / service call here like
-        // this.http.post('apiUrl', formModel)
-        setTimeout(() => {
-            console.log(formModel);
-            let formData:FormData = new FormData();
-            alert('done!');
-            this.loading = false;
-        }, 1000);
-    }
-
-    clearFile() {
-        this.form.get('avatar').setValue(null);
-        this.fileInput.nativeElement.value = '';
     }
 
     isAuthenticated() {
@@ -108,5 +83,9 @@ export class HomeComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    fileChanged() {
+        return this.fileUploaded;
     }
 }
