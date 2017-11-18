@@ -3,6 +3,7 @@ services:
     ctf-postgresql:
         image: postgres:9.6.5
         volumes:
+        #test commit
              - ~/volumes/jhipster/ctf/postgresql/:/var/lib/postgresql/data/
         environment:
             - POSTGRES_USER=ctf
