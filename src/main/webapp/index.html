@@ -103,6 +103,54 @@
         simulation.force("link")
             .links(graph.edges);
 
+        renderLegend(graph);
+
+    }
+
+    function renderLegend(graph) {
+        var listTypes = d3.set(graph.nodes.map(function(d){return d.group})).values();
+        listColors = [];
+        listPositions = [];
+
+        for(l = 0; l < listTypes.length; l++){
+            var currentGroup = listTypes[l];
+            listColors.push(color(currentGroup));
+            listPositions.push(l+1);
+        }
+
+        console.log(listTypes);
+        console.log(listColors);
+        console.log(listPositions);
+
+        svg.append("rect")
+            .attr("class", "overlay")
+            .attr("x",5)
+            .attr("y", 10)
+            .attr("width", Math.max.apply(Math,listPositions) * 10.6)
+            .attr("height", listTypes.length * 21.667)
+            .style ("fill", "aliceblue");
+
+        var legend = svg.selectAll(".legend")
+            .data(listTypes)
+            .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", function(d, i) { return "translate(" + (Math.floor(i / 11)  * 105) + ", " + listPositions[i] * 20 + ")"; });
+
+        legend.append("rect")
+            .attr("x", 10)
+            .attr("width", 15)
+            .attr("height", 15)
+            .attr("fill", function(d,i) {return listColors[i];});
+
+        legend.append("text")
+            .attr("x", 30 )
+            .attr("y", 6)
+            .attr("dy", ".35em")
+            .text(function(d,i){ return listTypes[i]});
+
+        svg.append("g")
+            .attr("class", "legend")
+
     }
 
     function ticked() {
@@ -500,6 +548,7 @@
                 console.log(http.response);
                 console.log(dummy.edges);
                 console.log(dummy.nodes);
+
                 showGraph(dummy);
             }
         };
