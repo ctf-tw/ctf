@@ -1,10 +1,10 @@
 {
     "metrics": {
-        "title": "Application Metrics",
+        "title": "User relationships",
         "refresh.button": "Refresh",
         "updating": "Updating...",
         "jvm": {
-            "title": "JVM Metrics",
+            "title": "Force Directed Graph",
             "memory": {
                 "title": "Memory",
                 "total": "Total Memory",
