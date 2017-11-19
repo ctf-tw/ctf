@@ -2,3 +2,4 @@ data.table
 dplyr
 RPostgreSQL
 igraph
+h2o

@@ -1,4 +1,3 @@
-
 setUpConnection <- function(){
   drv <- dbDriver("PostgreSQL")
   con_pg <- dbConnect(drv, dbname = "ctf",
