@@ -93,10 +93,13 @@
             .data(graph.nodes)
             .enter().append("circle")
             .attr("cx", function (d) {
-                return d.x;
+                return 200 + 10 * listTypes.indexOf(d.type);
+            })
+            .attr("cy", function (d) {
+                return 200 + 10 * listTypes.indexOf(d.type);
             })
             .attr("r", function (d) {
-                return 6;
+                return 6 + listTypes.indexOf(d.type);
             })
             .attr("fill", function (d) {
                 return calculateColor(

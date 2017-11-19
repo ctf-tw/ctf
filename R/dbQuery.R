@@ -20,7 +20,7 @@ getData <- function(tableName){
 saveResults <- function(users, descriptions){
   con <- setUpConnection()
   dbGetQuery(con, "CREATE TABLE IF NOT EXISTS suspected_reason (
-             id_user INT,
+             user_id INT,
              description TEXT);")
   
   for(i in seq(1,length(users))){
