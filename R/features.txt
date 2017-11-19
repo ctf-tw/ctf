@@ -1,0 +1,14 @@
+feature;description
+closeness;VALUE steps required to access every other node in the network (closeness)
+betweenness;VALUE shortest paths going through the node (centrality)
+degree;VALUE first-link connected users
+node_weight;VALUE change in betweenness when removing the node
+node_importance;a large influence on the rest of the network in terms of secrecy and efficiency 
+graph_density;graph density equal to VALUE
+n_edges;VALUE connections in the network
+n_nodes;VALUE nodes in the network
+graph_secrecy;secrecy (network variance) equal to VALUE
+graph_avg_path_length;average path length of VALUE
+avg_shortest_path_length;average shortest path length of VALUE
+graph_efficiency;VALUE sum of shortest paths in the network
+graph_performance;product of secrecy and efficiency of VALUE
