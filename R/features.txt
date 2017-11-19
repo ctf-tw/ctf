@@ -1,6 +1,6 @@
 feature;description
 closeness;VALUE steps required to access every other node in the network (closeness)
-betweenness;VALUE shortest paths going through the node (centrality)
+betweenness;VALUE shortest paths going through the node (betweenness)
 degree;VALUE first-link connected users
 node_weight;VALUE change in betweenness when removing the node
 node_importance;a large influence on the rest of the network in terms of secrecy and efficiency 
