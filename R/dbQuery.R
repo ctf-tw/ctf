@@ -25,7 +25,7 @@ saveResults <- function(users, descriptions){
              description TEXT);")
   
   for(i in length(users)){
-    query <- "INSERT INTO bad_users
+    query <- "INSERT INTO suspected_reason
               ID_USER,
               DESCRIPTION;"
     query <- gsub("ID_USER", users[i], query)
