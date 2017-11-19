@@ -59,7 +59,7 @@ public class FilesResource {
 //            saveUploadedFiles(Arrays.asList(uploadfile));
             DataFile dataFile = dataFileParserService.parse(uploadfile.getOriginalFilename().replace(".", "_"), uploadfile.getBytes());
             dbConversionService.createAndPopulateTable(dataFile);
-            rLauncherService.notifyUpload();
+            rLauncherService.notifyUpload(dataFile.getTableName());
 
 
         } catch (IOException e) {

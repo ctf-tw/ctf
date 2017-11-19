@@ -31,9 +31,9 @@ public class RLauncherServiceImpl implements RLauncherService {
     private String GET_DATA_COMMAND;
 
     @Override
-    public void notifyUpload() {
+    public void notifyUpload(String tableName) {
         ProcessBuilder builder = new ProcessBuilder();
-        String fullCommand = GET_DATA_COMMAND;
+        String fullCommand = GET_DATA_COMMAND + " " + tableName;
         builder.command(fullCommand.split(" "));
 
         builder.directory(new File(R_SCRIPTS_DIR_PATH));
