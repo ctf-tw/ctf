@@ -103,7 +103,7 @@ public class DataRetrieveService {
         matchedUsers.values().stream().flatMap(Collection::stream)
             .map(matchHolder -> matchHolder.userIds).flatMap(Collection::stream)
             .collect(toSet())
-            .stream().map(id -> nodes.add(new Node(Integer.parseInt(id), "user")));
+            .stream().forEach(id -> nodes.add(new Node(Integer.parseInt(id), "user")));
 
 
         return gson.toJson(new Graph(nodes, edges));
