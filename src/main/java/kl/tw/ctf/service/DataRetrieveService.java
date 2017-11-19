@@ -1,23 +1,16 @@
 package kl.tw.ctf.service;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import kl.tw.ctf.dao.DataFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -139,8 +132,6 @@ public class DataRetrieveService {
 
         Graph graph = new Graph(nodesToRender, edges);
         return gson.toJson(graph);
-
-
     }
 
     static class RenderNode {
@@ -152,6 +143,18 @@ public class DataRetrieveService {
             this.id = id;
             this.type = type;
             this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof RenderNode)
+                return ((RenderNode) obj).type.equals(this.type) && ((RenderNode) obj).value.equals(this.value);
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return (this.id).hashCode() + (this.value).hashCode() * 32 + (this.type).hashCode() * 32 * 32 ;
         }
     }
 
