@@ -2,9 +2,7 @@
 <div>
     <h2>
         <span jhiTranslate="metrics.title">Application Metrics</span>
-        <button class="btn btn-primary float-right" (click)="refresh()">
-            <span class="fa fa-refresh"></span> <span jhiTranslate="metrics.refresh.button">Refresh</span>
-        </button>
+
     </h2>
 
     <h3 jhiTranslate="metrics.jvm.title">JVM Metrics</h3>
@@ -13,8 +11,7 @@
     <div>
         <label>
             <input type="text" name="id">
-            <button onclick="myFunction()">Click me</button>
-
+            <button onclick="callApiToGetUserLinksAndNodes()">Mine for data</button>
         </label>
 
     </div>
