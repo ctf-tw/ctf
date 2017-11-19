@@ -22,6 +22,10 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    currentContext: string;
+    contexts: string[];
+    currentDataSet: string;
+    dataSets: string[];
 
     constructor(
         private loginService: LoginService,
@@ -44,6 +48,11 @@ export class NavbarComponent implements OnInit {
         this.profileService.getProfileInfo().subscribe((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
+        });
+
+        this.profileService.getContext().subscribe((contextData) => {
+            this.currentContext = contextData.currentContext;
+            this.contexts = contextData.contexts;
         });
     }
 

@@ -60,7 +60,16 @@
 
     var link;
     var node;
+
+    function refreshSvg() {
+        while (svg.lastChild) {
+            svg.removeChild(svg.lastChild);
+        }
+    }
+
     function showGraph(graph) {
+        refreshSvg(); //doesn't help
+
         console.log("A");
         var listTypes = d3.set(graph.nodes.map(function(d){return d.group})).values();
 

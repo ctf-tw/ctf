@@ -4,6 +4,8 @@ import kl.tw.ctf.config.DefaultProfileUtil;
 
 import io.github.jhipster.config.JHipsterProperties;
 
+import kl.tw.ctf.dao.DataFile;
+import kl.tw.ctf.service.impl.DataFileParserServiceImpl;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,13 @@ public class ProfileInfoResource {
         String[] activeProfiles = DefaultProfileUtil.getActiveProfiles(env);
         return new ProfileInfoVM(activeProfiles, getRibbonEnv(activeProfiles));
     }
+
+    @GetMapping("/context-info")
+    public ContextInfoVm getContextInfo() {
+        String currentContext = DataFileParserServiceImpl.currentlyOpenFile != null ? DataFileParserServiceImpl.currentlyOpenFile.getTableName() : null;
+        return new ContextInfoVm(currentContext, null, null, null);
+    }
+
 
     private String getRibbonEnv(String[] activeProfiles) {
         String[] displayOnActiveProfiles = jHipsterProperties.getRibbon().getDisplayOnActiveProfiles();
@@ -65,5 +74,36 @@ public class ProfileInfoResource {
         public String getRibbonEnv() {
             return ribbonEnv;
         }
+    }
+
+    class ContextInfoVm {
+        private String currentContext;
+        private String[] contexts;
+        private String currentDataSet;
+        private String[] dataSet;
+
+        public String getCurrentContext() {
+            return currentContext;
+        }
+
+        public String[] getContexts() {
+            return contexts;
+        }
+
+        public String getCurrentDataSet() {
+            return currentDataSet;
+        }
+
+        public String[] getDataSet() {
+            return dataSet;
+        }
+
+        public ContextInfoVm(String currentContext, String[] contexts, String currentDataSet, String[] dataSet) {
+            this.currentContext = currentContext;
+            this.contexts = contexts;
+            this.currentDataSet = currentDataSet;
+            this.dataSet = dataSet;
+        }
+
     }
 }
