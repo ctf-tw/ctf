@@ -43,7 +43,6 @@ public class DataRetrieveService {
             }
         })));
 
-
         userData.remove("user_id");
         return buildGraphForData(userData, dataFile.getTableName(), id);
     }
@@ -84,8 +83,8 @@ public class DataRetrieveService {
                 nodes.add(new Node((type + value.toString()).hashCode(), value.toString()));
             });
         });
-        String jsonNodes = gson.toJson(nodes);
         List<Edge> edges = new ArrayList<>();
+
         matchedUsers.entrySet().forEach(entry -> {
             entry.getValue().forEach(matchHolder -> {
                 matchHolder.userIds.forEach(targetId -> {
@@ -95,9 +94,19 @@ public class DataRetrieveService {
 
             });
         });
-        String jsonEdges = gson.toJson(edges);
-        return gson.toJson(asList(jsonNodes, jsonEdges));
+        System.out.println(gson.toJson(new Graph(nodes, edges)));
+        return gson.toJson(new Graph(nodes, edges));
 
+    }
+
+    static class Graph {
+        List<Node> nodes;
+        List<Edge> edges;
+
+        public Graph(List<Node> nodes, List<Edge> edges) {
+            this.nodes = nodes;
+            this.edges = edges;
+        }
     }
 
     static class Node {
