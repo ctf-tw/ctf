@@ -1,5 +1,5 @@
 package kl.tw.ctf.service;
 
 public interface RLauncherService {
-    public void notifyUpload();
+    public void notifyUpload(String tableName);
 }
