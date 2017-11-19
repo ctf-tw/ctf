@@ -20,12 +20,12 @@ getData <- function(tableName){
 
 saveResults <- function(users, descriptions){
   con <- setUpConnection()
-  dbGetQuery(con, "CREATE TABLE IF NOT EXISTS XXXXX (
+  dbGetQuery(con, "CREATE TABLE IF NOT EXISTS suspected_reason (
              id_user INT,
              description TEXT);")
   
   for(i in length(users)){
-    query <- "INSERT INTO XXXXX
+    query <- "INSERT INTO bad_users
               ID_USER,
               DESCRIPTION;"
     query <- gsub("ID_USER", users[i], query)
@@ -34,4 +34,3 @@ saveResults <- function(users, descriptions){
   }
   dbDisconnect(con)
 }
-
