@@ -1,12 +1,16 @@
 package kl.tw.ctf.service;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import kl.tw.ctf.dao.DataFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -83,18 +87,25 @@ public class DataRetrieveService {
                 nodes.add(new Node((type + value.toString()).hashCode(), value.toString()));
             });
         });
+
         List<Edge> edges = new ArrayList<>();
 
         matchedUsers.entrySet().forEach(entry -> {
             entry.getValue().forEach(matchHolder -> {
-                matchHolder.userIds.forEach(targetId -> {
+                matchHolder.userIds.forEach(userTargetId -> {
                     String type = entry.getKey();
-                    edges.add(new Edge((type + matchHolder.matchedValue).hashCode(), Integer.parseInt(targetId), matchHolder.matchedValue));
+                    edges.add(new Edge((type + matchHolder.matchedValue).hashCode(), Integer.parseInt(userTargetId), matchHolder.matchedValue));
                 });
 
             });
         });
-        System.out.println(gson.toJson(new Graph(nodes, edges)));
+
+        matchedUsers.values().stream().flatMap(Collection::stream)
+            .map(matchHolder -> matchHolder.userIds).flatMap(Collection::stream)
+            .collect(toSet())
+            .stream().map(id -> nodes.add(new Node(Integer.parseInt(id), "user")));
+
+
         return gson.toJson(new Graph(nodes, edges));
 
     }
@@ -155,9 +166,4 @@ public class DataRetrieveService {
             return matchedValue + " " + userIds;
         }
     }
-
-
-
-
-
 }
