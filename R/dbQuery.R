@@ -23,10 +23,11 @@ saveResults <- function(users, descriptions){
              id_user INT,
              description TEXT);")
   
-  for(i in length(users)){
+  for(i in seq(1,length(users))){
     query <- "INSERT INTO suspected_reason
+              SELECT
               ID_USER,
-              DESCRIPTION;"
+              \'DESCRIPTION\';"
     query <- gsub("ID_USER", users[i], query)
     query <- gsub("DESCRIPTION", descriptions[i], query)
     dbGetQuery(con, query)

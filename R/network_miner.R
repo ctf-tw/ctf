@@ -1,10 +1,11 @@
 #!/usr/bin/env Rscript
 args <- commandArgs(trailingOnly=TRUE)
-source("dbQuery.R")
-source("r_helpers.R")
+source("/Users/erki.hindo/ctfcodeathon2017/ctf/R/dbQuery.R")
+source("/Users/erki.hindo/ctfcodeathon2017/ctf/R/r_helpers.R")
+installPackages(paste(readLines("/Users/erki.hindo/ctfcodeathon2017/ctf/R/r_dependencies")))
 
 # load the feature descriptions
-features <- fread("~/Desktop/ctf/R/features.txt", sep=";") %>% as.data.frame()
+features <- fread("/Users/erki.hindo/ctfcodeathon2017/ctf/R/features.txt", sep=";") %>% as.data.frame()
 
 # query the database for given file and user
 data <- getData(args[1])
@@ -80,6 +81,7 @@ for(subgraph in subgraphs){
 
 # add labels
 names(final_nodes)[1] <- "id_user"
+names(data)[2] <- "id_user"
 final_nodes <- unique(merge(final_nodes, data[,c(which(colnames(data) %in% c("id_user","label")))]))
 final_nodes$label <- as.factor(final_nodes$label)
 
@@ -98,7 +100,7 @@ train_surrogate.hex <- h2o.cbind(as.h2o(final_nodes), preds$predict)
 train_surrogate <- as.data.frame(train_surrogate.hex)
 score <- cbind.data.frame(final_nodes, p=as.data.frame(preds$p1), predict = as.data.frame(preds$predict))
 score <- score[score$predict == 1 & score$label == 0,]
-score <- head(score[order(score$p1, decreasing = TRUE),], 5)
+score <- score[sample(c(1:nrow(score)), 10),]
 
 # specify surrogate params
 hyper_params_glm <- list(alpha = c(0.0, 0.2, 0.4, 0.6, 0.8, 1.0))
